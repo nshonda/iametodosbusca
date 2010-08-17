@@ -1,0 +1,17 @@
+#Arquivo que configura a topologia da Rede.
+## A primeira seção configura os Nós (NODES).
+192.168.1.0;GigaRouter SP
+192.168.2.0;GigaRouter PR
+192.168.3.0;GigaRouter MG
+192.168.4.0;Cisco Router PR-LDN
+
+## O Delimitador de Sequência de Entradas será /
+/
+
+## A Segunda seção configura as Arestas (EDGES)
+### Atenção a sequência a seguir será:
+### Nó de Origem;Possíveis destinos, separador por "-" 
+192.168.1.0;192.168.2.0-192.168.3.0-192.168.4.0
+192.168.2.0;192.168.1.0-192.168.3.0-192.168.4.0
+192.168.3.0;192.168.1.0-192.168.2.0-192.168.4.0
+192.168.4.0;192.168.1.0-192.168.2.0-192.168.3.0
