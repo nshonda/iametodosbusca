@@ -30,7 +30,7 @@ public class Verbose {
 			boolean isVerboso = Boolean.parseBoolean(System.getProperty(
 					"verbose", "false"));
 
-			System.out.println("O MODO VERBOSO ESTÁ "
+			System.out.println("O modo verboso está "
 					+ (isVerboso ? "ATIVADO" : "DESATIVADO") + ".");
 
 			if (!isVerboso)
@@ -47,8 +47,7 @@ public class Verbose {
 	 * Deve ser síncrono pois só há um console.
 	 */
 	public synchronized void info(String msg) {
-		//TODO Desfazer o NOT
-		if (!verbo)
+		if (verbo)
 			System.out.println("[" + sdf.format(new Date()) + "] - " + msg);
 	}
 
