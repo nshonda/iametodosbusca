@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.pucpr.excecoes.ExceçãoDeArquivo;
+import br.pucpr.excecoes.NóNãoEncontradoExceção;
 import br.pucpr.model.Edge;
 import br.pucpr.model.Node;
 import br.pucpr.util.Verbose;
@@ -61,10 +62,9 @@ public class ControleParser {
 
 					info = info[1].split("-");
 
-					int peso = 1;
 					for (String ipDestino : info) {
 						// TODO Arrumar o peso
-						Edge aresta = new Edge(ipDestino, (peso++) * 3);
+						Edge aresta = new Edge(ipDestino, 1);
 						arestasOrigem.add(aresta);
 					}
 
@@ -76,10 +76,34 @@ public class ControleParser {
 		}
 	}
 
-	
-		
 	public final List<Node> getGrafo() {
 		return nodes;
+	}
+
+	/**
+	 * Busca as informações do NODE passado o ID.
+	 * 
+	 * @param ip
+	 *            - string que representa o IP desejado.
+	 * @return o nó preenchido
+	 * @throws NóNãoEncontradoExceção
+	 */
+	public final Node getNodeInfoNoGrafo(String ip)
+			throws NóNãoEncontradoExceção {
+		Node nó = null;
+		try {
+			int index = nodes.indexOf(new Node(ip));
+
+			if (index >= 0)
+				nó = nodes.get(index);
+		} catch (Exception e) {
+			throw new NóNãoEncontradoExceção("O Nó não foi encontrado.\n", e);
+		}
+
+		if (nó == null)
+			throw new NóNãoEncontradoExceção("O Nó não foi encontrado.");
+
+		return nó;
 	}
 
 	public void mostraGrafo() {
@@ -91,20 +115,10 @@ public class ControleParser {
 				Node noDestino = new Node(ar.getIpDestino());
 				int index = nodes.indexOf(noDestino);
 				noDestino = nodes.get(index);
-				System.out.println("    ATINGE => " + noDestino.toString() + " PESO CAMINHO = "+ar.getPeso());
+				System.out.println("    ATINGE => " + noDestino.toString()
+						+ " PESO CAMINHO = " + ar.getPeso());
 			}
 
 		}
 	}
-
-	public static void main(String[] args) {
-		try {
-			ControleParser cp = new ControleParser("resources/topologia01.txt");
-			cp.constróiGrafo();
-			cp.mostraGrafo();
-		} catch (ExceçãoDeArquivo e) {
-			e.printStackTrace();
-		}
-	}
-
 }

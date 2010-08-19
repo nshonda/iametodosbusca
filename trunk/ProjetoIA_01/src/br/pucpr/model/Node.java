@@ -7,6 +7,7 @@ public class Node {
 	private String iP;
 	private String nome;
 	private List<Edge> arestas;
+	private boolean visitado;
 
 	/**
 	 * Contrutor padrão.<br />
@@ -20,6 +21,7 @@ public class Node {
 		this.iP = ip;
 		this.nome = nome;
 		arestas = new ArrayList<Edge>();
+		this.visitado = false;
 	}
 
 	/**
@@ -35,6 +37,15 @@ public class Node {
 	public List<Edge> getArestas() {
 		return arestas;
 	}
+	
+	public void setVisitado(boolean visitado) {
+		this.visitado = visitado;
+	}
+
+	public boolean isVisitado() {
+		return visitado;
+	}
+
 
 	@Override
 	public String toString() {
