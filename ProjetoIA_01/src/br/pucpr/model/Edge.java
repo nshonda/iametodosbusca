@@ -3,13 +3,11 @@ package br.pucpr.model;
 public class Edge {
 	private String ipDestino;
 	private int peso;
-	private boolean visitado;
 
 	public Edge(String ipDestino, int peso) {
 		super();
 		this.ipDestino = ipDestino;
 		this.peso = peso;
-		this.setVisitado(false);
 	}
 
 	public String getIpDestino() {
@@ -18,14 +16,6 @@ public class Edge {
 
 	public int getPeso() {
 		return peso;
-	}
-
-	public void setVisitado(boolean visitado) {
-		this.visitado = visitado;
-	}
-
-	public boolean isVisitado() {
-		return visitado;
 	}
 
 	@Override
