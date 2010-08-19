@@ -76,6 +76,12 @@ public class ControleParser {
 		}
 	}
 
+	
+		
+	public final List<Node> getGrafo() {
+		return nodes;
+	}
+
 	public void mostraGrafo() {
 		for (Node nó : nodes) {
 			logger.info("---------------------------------\nORIGEM => "
