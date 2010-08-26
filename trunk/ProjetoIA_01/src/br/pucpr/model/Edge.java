@@ -2,25 +2,19 @@ package br.pucpr.model;
 
 public class Edge {
 	private String ipDestino;
-	private int peso;
 
-	public Edge(String ipDestino, int peso) {
+	public Edge(String ipDestino) {
 		super();
 		this.ipDestino = ipDestino;
-		this.peso = peso;
 	}
 
 	public String getIpDestino() {
 		return ipDestino;
 	}
 
-	public int getPeso() {
-		return peso;
-	}
-
 	@Override
 	public String toString() {
-		return "Edge [ipDestino=" + ipDestino + ", peso=" + peso + "]";
+		return "Edge [ipDestino=" + ipDestino + "]";
 	}
 
 	@Override

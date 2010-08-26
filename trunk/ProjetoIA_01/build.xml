@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project default="create" name="Busca" basedir=".">
+
+	<property name="source.dir" value="${basedir}/src" />
+	<property name="classes.dir" value="${basedir}/temp" />
+	<property name="dist.dir" value="${basedir}/dist" />
+	<property name="resources.dir" value="${basedir}/resources" />
+	<property name="jar.name" value="busca.jar" />
+
+
+	<target name="inicializar">
+		<echo>Inicializando as estruturas de diretórios.</echo>
+		<delete>
+			<fileset dir="${dist.dir}">
+				<include name="*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="compilar" depends="inicializar">
+		<echo>Compilado as classes para gerar o pacote!</echo>
+		<mkdir dir="${classes.dir}" />
+
+		<javac srcdir="${source.dir}" destdir="${classes.dir}" classpath="${java.class.path}" debug="on" />
+
+	</target>
+
+	<target name="create" depends="compilar">
+		<jar destfile="${dist.dir}/${jar.name}" filesetmanifest="mergewithoutmain">
+			<manifest>
+				<attribute name="Main-Class" value="br.pucpr.MetodosBusca" />
+				<attribute name="Class-Path" value="." />
+				<attribute name="Created-By" value="Heverton Ivan de Sene" />
+			</manifest>
+			<fileset dir="${classes.dir}" />
+		</jar>
+		<delete dir="${classes.dir}" />
+		<antcall target="copiar_resources">
+		</antcall>
+	</target>
+
+	<target name="copiar_resources">
+		<echo>Copiando os arquivo importantes para a pasta resources.</echo>
+		<copy todir="${dist.dir}">
+			<fileset dir="${basedir}">
+				<include name="executar*.cmd" />
+			</fileset>
+		</copy>
+		<copy todir="${dist.dir}/resources">
+			<fileset dir="${resources.dir}">
+				<include name="*" />
+				<exclude name="*edx" />
+			</fileset>
+		</copy>
+	</target>
+</project>

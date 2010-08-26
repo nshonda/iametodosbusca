@@ -30,25 +30,28 @@ public class Verbose {
 			boolean isVerboso = Boolean.parseBoolean(System.getProperty(
 					"verbose", "false"));
 
-			System.out.println("O modo verboso está "
-					+ (isVerboso ? "ATIVADO" : "DESATIVADO") + ".");
-
-			if (!isVerboso)
-				System.out
-						.println("Para ativar o modo verboso utilize o argumento -Dverbose=true");
-
 			instancia = new Verbose(isVerboso);
 		}
 		return instancia;
 	}
 
 	/**
+	 * Loga a mensagem em modo de debub. <br />
+	 * Deve ser síncrono pois só há um console.
+	 */
+	public synchronized void debug(String msg) {
+		if (verbo)
+			System.out.println("[" + sdf.format(new Date()) + "] - " + msg);
+	}
+	
+	/**
 	 * Loga a mensagem em modo de informação. <br />
 	 * Deve ser síncrono pois só há um console.
 	 */
 	public synchronized void info(String msg) {
-		if (verbo)
 			System.out.println("[" + sdf.format(new Date()) + "] - " + msg);
 	}
+	
+	
 
 }
