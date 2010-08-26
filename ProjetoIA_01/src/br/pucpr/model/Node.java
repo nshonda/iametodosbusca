@@ -8,6 +8,7 @@ public class Node {
 	private String nome;
 	private List<Edge> arestas;
 	private boolean visitado;
+	private Node pai;
 
 	/**
 	 * Contrutor padrão.<br />
@@ -22,6 +23,7 @@ public class Node {
 		this.nome = nome;
 		arestas = new ArrayList<Edge>();
 		this.visitado = false;
+		this.pai = null;
 	}
 
 	/**
@@ -46,6 +48,14 @@ public class Node {
 		return visitado;
 	}
 
+
+	public void setPai(Node pai) {
+		this.pai = pai;
+	}
+
+	public Node getPai() {
+		return pai;
+	}
 
 	@Override
 	public String toString() {

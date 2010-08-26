@@ -33,7 +33,7 @@ public class ControleParser {
 			String linha = file.leiaLinha();
 			if (linha != null) {
 				if (!linha.startsWith("/")) {
-					logger.info(linha);
+					logger.debug(linha);
 
 					String[] info = linha.split(";");
 					String ip = info[0];
@@ -52,7 +52,7 @@ public class ControleParser {
 			String linha = file.leiaLinha();
 			if (linha != null) {
 				if (!linha.startsWith("/")) {
-					logger.info(linha);
+					logger.debug(linha);
 					String[] info = linha.split(";");
 					String ipOrigem = info[0];
 
@@ -64,7 +64,7 @@ public class ControleParser {
 
 					for (String ipDestino : info) {
 						// TODO Arrumar o peso
-						Edge aresta = new Edge(ipDestino, 1);
+						Edge aresta = new Edge(ipDestino);
 						arestasOrigem.add(aresta);
 					}
 
@@ -108,15 +108,13 @@ public class ControleParser {
 
 	public void mostraGrafo() {
 		for (Node nó : nodes) {
-			logger.info("---------------------------------\nORIGEM => "
+			logger.debug("---------------------------------\nORIGEM => "
 					+ nó.toString());
 			List<Edge> arestas = nó.getArestas();
 			for (Edge ar : arestas) {
 				Node noDestino = new Node(ar.getIpDestino());
 				int index = nodes.indexOf(noDestino);
 				noDestino = nodes.get(index);
-				System.out.println("    ATINGE => " + noDestino.toString()
-						+ " PESO CAMINHO = " + ar.getPeso());
 			}
 
 		}

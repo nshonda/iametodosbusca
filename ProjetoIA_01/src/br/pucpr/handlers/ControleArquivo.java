@@ -24,7 +24,7 @@ public class ControleArquivo {
 	public ControleArquivo(String path) throws ExceçãoDeArquivo {
 		super();
 		this.path = path;
-		logger.info("Iniciando o arquivo em : " + path);
+		logger.debug("Iniciando o arquivo em : " + path);
 		inicializarArquivo();
 	}
 
@@ -85,7 +85,7 @@ public class ControleArquivo {
 				}
 			} while (retorno.isEmpty() || retorno.startsWith("#"));
 		} catch (IOException e) {
-			logger.info("ERRO - " + e.getMessage());
+			logger.debug("ERRO - " + e.getMessage());
 		}
 
 		return retorno;

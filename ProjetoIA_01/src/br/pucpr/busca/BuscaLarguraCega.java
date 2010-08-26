@@ -6,6 +6,7 @@ import java.util.List;
 import br.pucpr.excecoes.NóNãoEncontradoExceção;
 import br.pucpr.model.Edge;
 import br.pucpr.model.Node;
+import br.pucpr.util.Util;
 import br.pucpr.util.Verbose;
 
 /**
@@ -67,58 +68,74 @@ public class BuscaLarguraCega {
 		return nó;
 	}
 
-	public void buscarLargura(Node inicio, Node fim)
+	/**
+	 * Retorna o nó do caminho.
+	 * @param inicio
+	 * @param fim
+	 * @throws NóNãoEncontradoExceção
+	 */
+	public Node buscarLargura(Node inicio, Node fim)
 			throws NóNãoEncontradoExceção {
-		logger.info("Começar o método de busca em Largura.");
+		logger.debug("Começar o método de busca em Largura.");
 		long beginTime = System.currentTimeMillis();
 
 		if (fim.equals(inicio)) {
-			logger.info("você já se encontra onde gostaria.");
-			return;
+			logger.debug("você já se encontra onde gostaria. ==> "+inicio);
+			return inicio;
 		}
 
+		Node nó = inicio;
+		logger.debug("Inicio em => "+nó);
 		zeraGrafo();
 
-		List<Edge> ligacoes = inicio.getArestas();
-		inicio.setVisitado(true);
+		List<Edge> ligacoes = nó.getArestas();
+		nó.setVisitado(true);
 
-		adicionaEntradaNoFimDaLista(ligacoes);
-
+		adicionaEntradaNoFimDaLista(ligacoes, nó);
+		
 		while (!adjacentes.isEmpty()) {
-			Node nó = adjacentes.remove(0);
+			nó = adjacentes.remove(0);
 
 			if (!nó.isVisitado()) {
 				nó.setVisitado(true);
-				System.out.println(nó);
+				Util.incrementaQtdeNoVisitado();
 				if (fim.equals(nó)) {
-					logger.info("Nó encontrado.");
+					logger.debug("Nó encontrado.");
 					break;
 				}
 
 				ligacoes = nó.getArestas();
-				adicionaEntradaNoFimDaLista(ligacoes);
+				adicionaEntradaNoFimDaLista(ligacoes, nó);
 			}
 		}
 
 		long endTime = System.currentTimeMillis();
-		logger.info("O método de busca em Largura demorou ["
+		logger.debug("O método de busca em Largura demorou ["
 				+ (endTime - beginTime) + "] milisegundos.");
+		return nó;
 	}
 
 	/**
 	 * Adiciona as entradas da Aresta em uma lista.
 	 * 
 	 * @param ligacoes
+	 * @param pai - Nó pai que está requisitando a inserção na fila
 	 * @throws NóNãoEncontradoExceção
 	 */
-	private void adicionaEntradaNoFimDaLista(List<Edge> ligacoes)
+	private void adicionaEntradaNoFimDaLista(List<Edge> ligacoes, Node pai)
 			throws NóNãoEncontradoExceção {
 
 		for (Edge edge : ligacoes) {
 			Node nó = getNodeInfoNoGrafo(edge.getIpDestino());
 
-			if (!nó.isVisitado())
+			if (!nó.isVisitado()){
+				if (nó.getPai() == null)
+					nó.setPai(pai);
+				
 				adjacentes.add(nó);
+			}
+			
+			
 		}
 	}
 
