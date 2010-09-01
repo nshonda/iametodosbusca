@@ -63,6 +63,7 @@ public class MetodosBusca {
 			Node inicio = cp.getNodeInfoNoGrafo(origem);
 			Node fim = cp.getNodeInfoNoGrafo(destino);
 
+			// O Código termina de construir o grafo.
 			BuscaLarguraCega busca = new BuscaLarguraCega(grafo);
 			Node encontrado = busca.buscarLargura(inicio, fim);
 

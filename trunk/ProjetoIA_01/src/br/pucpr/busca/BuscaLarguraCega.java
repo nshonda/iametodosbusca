@@ -70,6 +70,7 @@ public class BuscaLarguraCega {
 
 	/**
 	 * Retorna o nó do caminho.
+	 * 
 	 * @param inicio
 	 * @param fim
 	 * @throws NóNãoEncontradoExceção
@@ -80,23 +81,27 @@ public class BuscaLarguraCega {
 		long beginTime = System.currentTimeMillis();
 
 		if (fim.equals(inicio)) {
-			logger.debug("você já se encontra onde gostaria. ==> "+inicio);
+			logger.debug("você já se encontra onde gostaria. ==> " + inicio);
 			return inicio;
 		}
 
 		Node nó = inicio;
-		logger.debug("Inicio em => "+nó);
+		logger.debug("Inicio em => " + nó);
 		zeraGrafo();
 
 		List<Edge> ligacoes = nó.getArestas();
 		nó.setVisitado(true);
 
 		adicionaEntradaNoFimDaLista(ligacoes, nó);
-		
+
 		while (!adjacentes.isEmpty()) {
 			nó = adjacentes.remove(0);
 
 			if (!nó.isVisitado()) {
+
+				logger.debug("Visitando ." + nó + " >> "
+						+ Util.getNumeroNosVisitados());
+
 				nó.setVisitado(true);
 				Util.incrementaQtdeNoVisitado();
 				if (fim.equals(nó)) {
@@ -119,7 +124,8 @@ public class BuscaLarguraCega {
 	 * Adiciona as entradas da Aresta em uma lista.
 	 * 
 	 * @param ligacoes
-	 * @param pai - Nó pai que está requisitando a inserção na fila
+	 * @param pai
+	 *            - Nó pai que está requisitando a inserção na fila
 	 * @throws NóNãoEncontradoExceção
 	 */
 	private void adicionaEntradaNoFimDaLista(List<Edge> ligacoes, Node pai)
@@ -128,14 +134,13 @@ public class BuscaLarguraCega {
 		for (Edge edge : ligacoes) {
 			Node nó = getNodeInfoNoGrafo(edge.getIpDestino());
 
-			if (!nó.isVisitado()){
+			if (!nó.isVisitado()) {
 				if (nó.getPai() == null)
 					nó.setPai(pai);
-				
+
 				adjacentes.add(nó);
 			}
-			
-			
+
 		}
 	}
 
