@@ -3,6 +3,7 @@ package br.pucpr;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.pucpr.busca.BuscaA;
 import br.pucpr.busca.BuscaLarguraCega;
 import br.pucpr.excecoes.ExceçãoDeArquivo;
 import br.pucpr.excecoes.NóNãoEncontradoExceção;
@@ -64,8 +65,20 @@ public class MetodosBusca {
 			Node fim = cp.getNodeInfoNoGrafo(destino);
 
 			// O Código termina de construir o grafo.
-			BuscaLarguraCega busca = new BuscaLarguraCega(grafo);
-			Node encontrado = busca.buscarLargura(inicio, fim);
+			
+			Node encontrado = null;
+			
+			if (tipo.equals(TipoBusca.CEGA)) {
+				BuscaLarguraCega busca = new BuscaLarguraCega(grafo);
+				encontrado = busca.buscarLargura(inicio, fim);
+			}
+			
+			
+			if (tipo.equals(TipoBusca.A_STAR)) {
+				BuscaA busca = new BuscaA(grafo);
+				encontrado = busca.buscarA(inicio, fim);
+			}
+
 
 			// Preenche o caminho de volta.
 			List<Node> caminho = new ArrayList<Node>();
