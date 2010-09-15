@@ -7,6 +7,7 @@ import br.pucpr.excecoes.ExceçãoDeArquivo;
 import br.pucpr.excecoes.NóNãoEncontradoExceção;
 import br.pucpr.model.Edge;
 import br.pucpr.model.Node;
+import br.pucpr.model.Ponto;
 import br.pucpr.util.Verbose;
 
 public class ControleParser {
@@ -38,7 +39,11 @@ public class ControleParser {
 					String[] info = linha.split(";");
 					String ip = info[0];
 					String nome = info[1];
-					Node nó = new Node(ip, nome);
+					int X = Integer.parseInt(info[2]);
+					int Y = Integer.parseInt(info[3]);
+					int Fator = Integer.parseInt(info[4]);
+					Ponto P = new Ponto(X,Y);
+					Node nó = new Node(ip, nome, P, Fator);
 					nodes.add(nó);
 				} else {
 					// Significa que acabou a parte de carga de nodes

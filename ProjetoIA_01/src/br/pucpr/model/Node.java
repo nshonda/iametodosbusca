@@ -3,12 +3,16 @@ package br.pucpr.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Node {
+public class Node implements Comparable<Node>{
 	private String iP;
 	private String nome;
 	private List<Edge> arestas;
 	private boolean visitado;
 	private Node pai;
+	private Ponto origem;
+	private int fator;
+	private double tempoTotal;
+	private double faltaTempo;
 
 	/**
 	 * Contrutor padrão.<br />
@@ -17,10 +21,12 @@ public class Node {
 	 * @param ip
 	 * @param nome
 	 */
-	public Node(String ip, String nome) {
+	public Node(String ip, String nome, Ponto origem, int fator) {
 		super();
 		this.iP = ip;
 		this.nome = nome;
+		this.origem = origem;
+		this.fator = fator;
 		arestas = new ArrayList<Edge>();
 		this.visitado = false;
 		this.pai = null;
@@ -33,13 +39,13 @@ public class Node {
 	 * @param ip
 	 */
 	public Node(String ip) {
-		this(ip, null);
+		this(ip, null, null, 0);
 	}
 
 	public List<Edge> getArestas() {
 		return arestas;
 	}
-	
+
 	public void setVisitado(boolean visitado) {
 		this.visitado = visitado;
 	}
@@ -47,7 +53,6 @@ public class Node {
 	public boolean isVisitado() {
 		return visitado;
 	}
-
 
 	public void setPai(Node pai) {
 		this.pai = pai;
@@ -57,9 +62,37 @@ public class Node {
 		return pai;
 	}
 
+	public Ponto getOrigem() {
+		return origem;
+	}
+
+	public int getFator() {
+		return fator;
+	}
+
+	public double getTempoTotal() {
+		return tempoTotal;
+	}
+	
+	public double getFaltaTempo() {
+		return faltaTempo;
+	}
+
+	public void calculaTempoTotal() {
+		this.tempoTotal = 0;
+		if(this.pai != null) {
+			tempoTotal = this.pai.getTempoTotal() + (this.fator + pai.getFator())* this.origem.calcularDistancia(pai.getOrigem());
+		}
+	}
+	
+	public void calculaTempoRestante(Node destino) {
+		faltaTempo = (this.fator + destino.getFator()) * this.origem.calcularDistancia(destino.getOrigem());
+	}
+
 	@Override
 	public String toString() {
-		return "Node [IP=" + iP + ", nome=" + nome + " ]";
+		return "Node [IP=" + iP + ", " + this.origem
+				+ ",  fator=" + this.fator + ", Tt= "+ this.tempoTotal +", Tf= "+ this.faltaTempo +", Soma = " + (this.tempoTotal + this.faltaTempo) + "]";
 	}
 
 	@Override
@@ -85,6 +118,14 @@ public class Node {
 		} else if (!iP.equals(other.iP))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(Node o) {
+		
+		if((this.faltaTempo + this.tempoTotal) < (o.getFaltaTempo() + o.getTempoTotal())) return -1;
+		if((this.faltaTempo + this.tempoTotal) > (o.getFaltaTempo() + o.getTempoTotal())) return 1;
+		return 0;
 	}
 
 }
