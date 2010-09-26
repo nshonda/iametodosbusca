@@ -1,0 +1,19 @@
+Para compilar o projeto é necessário ter o Eclipse em sua máquina ou o Ant 1.7.1.
+
+Pelo Eclipse, abra o build.xml e use a opção create.
+
+Pelo Ant, que deve estar no seu path.
+Execute:
+ant -f build.xml create
+
+Com isso basta executar os dois cmd disponíveis, um para modo normal e outro para o modo verboso.
+
+Note que dentro da pasta resources existe a topologia da rede mapeada! Utilizar os ips de Lá.
+Exemplos de como executar o programa de maneira válida e funcional.
+Efetuar busca cega:
+	executar_normal 192.1.3.0 192.5.4.0 CEGA
+	executar_verbose 192.2.2.0 192.4.3.0 CEGA
+
+Efetuar busca A Estrela
+	executar_normal 192.1.2.0 192.5.5.0 A*
+	executar_verbose 192.2.3.0 192.4.6.0 A*
